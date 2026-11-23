@@ -28,3 +28,11 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- App code is plain JavaScript/JSX in `src/components`, `src/pages`, `src/data`, `src/lib`, `src/store`; route files in `src/routes` stay thin `.tsx` wrappers. Why: the client requires React + Tailwind + JS only, while the framework needs typed route files.
+- Do not add UI kits, icon libraries, chart libraries or a backend; icons are inline SVG in `src/components/Icons.jsx`, charts are hand-built SVG/CSS. Why: explicit client constraint.
+- All site and admin data flows through `AppProvider` (`src/store/AppStore.jsx`), mounted in `__root.tsx`, persisted to localStorage after hydration. Why: public site and admin panel must share state with no backend.
+- Inside `/admin`, sections switch via React state in `AdminApp.jsx`, not extra routes. Why: client asked for state-based navigation instead of a routing library.
+- Lead updates/deletes are always keyed by enquiry ID and property modules filter by property ID via `src/lib/leads.js`. Why: the two farmhouse lead modules must stay independent.
